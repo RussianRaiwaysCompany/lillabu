@@ -104,8 +104,18 @@ if __name__ == "__main__":
             print("usage: parser.py <file to parse>")
             sys.exit(1)
 
-        with open(sys.argv[1], "r") as file:
-            data, route, order = parse(file.read())
+        try:
+            with open(sys.argv[1], "r") as file:
+                parse_result = parse(file.read())
+                if not parse_result:
+                    raise RuntimeError("Some shit happen...")
+                data, route, order = parse_result
+        except RuntimeError as e:
+            print("ERROR:", e)
+            return
+        except FileNotFoundError as e:
+            print("ERROR:", e)
+            return
 
         for entry in data:
             print(entry)
