@@ -1,0 +1,24 @@
+DATA
+T4 4 100.532 -- dummy comment at end of the line
+/
+
+-- route points
+ROUTE
+10 10 1000 -- stupid integer
+10 11 1.4913 -- stupid floating point
+10 12 .5932 -- reduced integral part
+10 13 1.392e2 -- scientific notation
+10 14 2e3 -- scientific notation with integer mantissa
+10 15 .349e3 -- scientific notation with reduced integral part
+-- we DOES NOT SUPPORT floationg point exponent in scientific notation for now!
+/
+
+-- blocks order
+ORDER
+T4 1
+T4 1
+T4 1
+T4 1
+/
+
+-- it is it...

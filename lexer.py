@@ -20,8 +20,8 @@ class LexerRules:
     )
 
     def t_SDATA_SROUTE_SORDER_NUMBER(t):
-        r'\d+'
-        t.value = int(t.value)
+        r'-?(\d+|\d+\.\d+|\.\d+)(e\d+)?'
+        t.value = float(t.value)
         return t
 
     t_SDATA_SORDER_TYPE = r'(L1|L2|L3|L4|T4|T8|B1)'
