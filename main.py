@@ -71,7 +71,7 @@ def check_order_info_or_die(order_info):
         if not order_entry.type in ['L1', 'L2', 'L3', 'L4', 'T4', 'T8', 'B1']:
             print(f"{idx}th order entry has invalid type {data_entry.type}")
             suicide = True
-        if not order_entry.dir in [-1, 0, 1]:
+        if (order_entry.type in ['L1', 'L2', 'L3', 'L4', 'B1'] and order_entry.dir != 1) or (order_entry.type in ['T4', 'T8'] and not order_entry.dir in [-1, 1]):
             print(f"{idx}th order entry has invalid direction {order_entry.dir}");
             suicide = True
 
