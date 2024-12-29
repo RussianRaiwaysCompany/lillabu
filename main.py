@@ -1,6 +1,7 @@
 import sys
 import parser
 import argparse
+import numpy as np
 
 EPS = 1e-9
 
@@ -87,9 +88,63 @@ def check_blocks_balance_or_die(data_info, order_info):
             print(f"Overuse of block {block}, used {used}, but available only {available}")
             sys.exit(1)
 
+def rot_mtx(angle):
+    return np.array([
+        [np.cos(angle), np.sin(angle)],
+        [-np.sin(angle), np.cos(angle)]
+    ])
+
+ELEMENTS = {
+    'L1' : {
+        'offset': np.array([1, 0], dtype=float),
+        'rot': np.identity(2)
+    },
+    'L2' : {
+        'offset': np.array([2, 0], dtype=float),
+        'rot': np.identity(2)
+    },
+    'L3' : {
+        'offset': np.array([3, 0], dtype=float),
+        'rot': np.identity(2)
+    },
+    'L4' : {
+        'offset': np.array([4, 0], dtype=float),
+        'rot': np.identity(2)
+    },
+    'T4': {
+        'offset': np.array([np.cos(np.pi / 4)*(-3)+3, np.sin(np.pi / 4)*3], dtype=float),
+        'rot': rot_mtx(np.pi / 4)
+    },
+    'T8': {
+        'offset': np.array([np.cos(np.pi / 8)*(-3)+3, np.sin(np.pi / 8)*3], dtype=float),
+        'rot': rot_mtx(np.pi / 8)
+    }
+}
+
+FLIP = np.array([
+    [1, 0],
+    [0, -1]
+], dtype=float)
+
+IDENTITY = np.identity(2)
+
+FLIP_SELECTOR = (IDENTITY, FLIP)
+
 def check_closed_loop_or_die(order_info):
+    start_offset = np.zeros(2)
+    start_rot = IDENTITY
     for order_entry in order_info:
-        pass # TODO: Implement me please
+        direction = order_entry.dir
+        offset = ELEMENTS[order_entry.type]['offset']
+        rot = ELEMENTS[order_entry.type]['rot']
+
+        start_offset = start_offset + start_rot @ np.asarray(offset) * direction
+        start_rot = start_rot @ rot
+        #pass # TODO: Implement me please
+    #print(start_offset)
+    if (np.abs(start_offset[0]) > 1e-8 or np.abs(start_offset[1]) > 1e-8):
+        print(f"End point isn't (0, 0), it is ({start_offset[0]}, {start_offset[1]})")
+        sys.exit(1)
 
 def estimate_cost(data_info, order_info, route_info):
     pass # TODO: Implement me please
