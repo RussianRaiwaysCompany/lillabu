@@ -1,0 +1,25 @@
+-- blocks list
+DATA
+T4 10 100 -- dummy comment at end of the line
+L2 5 -3
+L1 8 8
+/
+
+-- route points
+ROUTE
+0 0 5
+10 10 1000
+2 2 10
+
+
+-- blocks order
+ORDER
+T4 1
+T4 1
+T4 1
+T4 1
+T4 1
+T4 1
+T4 1
+T4 1
+/

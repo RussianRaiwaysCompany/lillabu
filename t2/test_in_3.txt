@@ -1,0 +1,18 @@
+-- route points
+ROUTE
+0 0 5
+10 10 1000
+2 2 10
+/
+
+-- blocks order
+ORDER
+T4 1
+T4 1
+T4 1
+T4 1
+T4 1
+T4 1
+T4 1
+T4 1
+/
