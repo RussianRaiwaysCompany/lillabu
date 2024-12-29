@@ -115,4 +115,4 @@ if __name__ == "__main__":
     if check_order_only:
         check_order_info_or_die(order_info)
         check_blocks_balance_or_die(data_info, order_info)
-        check_closed_loop(order_info)
+        check_closed_loop_or_die(order_info)
